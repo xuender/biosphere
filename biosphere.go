@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/vbauerster/mpb/v5"
+	"github.com/vbauerster/mpb/v5/decor"
 	"github.com/xuender/oil/random"
 )
 
@@ -30,10 +32,31 @@ func (b *Biosphere) Run() {
 	for i := 0; i < b.GroupSize; i++ {
 		b.group[i] = &obj{dna: b.bio.Init()}
 	}
-	// data := "455351051456452243351633534451154250254154221451354510453256220034336004402541356453453250053056215343005531151152203453243006450145534054355644033052004366341442126140213356430424341446226153426123453230616665611301614145544550552231432632141"
-	// for i, d := range data {
-	// 	b.group[0].dna[i] = int(d - 48)
-	// }
+	// 进度条
+	p := mpb.New(mpb.WithWidth(64))
+	bar := p.AddBar(
+		// 总数
+		int64(b.EvalTimes),
+		// 进图条前缀
+		mpb.PrependDecorators(
+			decor.Name("迭代"),
+			// 计数
+			decor.CountersNoUnit(": %d / %d", decor.WCSyncWidth),
+			decor.Any(func(s *decor.Statistics) string {
+				return fmt.Sprintf("最高分: %d", b.group[0].Score())
+			}, decor.WC{W: 6}),
+		),
+		// 进度条后缀
+		mpb.AppendDecorators(
+			// 百分比
+			decor.Percentage(),
+			// 剩余时间
+			decor.OnComplete(
+				decor.AverageETA(decor.ET_STYLE_MMSS, decor.WC{W: 6}), "完毕",
+			),
+		),
+	)
+
 	// 迭代
 	for e := 0; e < b.EvalTimes; e++ {
 		// 遍历族群
@@ -46,7 +69,7 @@ func (b *Biosphere) Run() {
 		sort.Slice(b.group, func(i, j int) bool {
 			return b.group[i].Score() > b.group[j].Score()
 		})
-		fmt.Printf("迭代: %04d", e+1)
+		// fmt.Printf("迭代: %04d", e+1)
 		b.best()
 		// 繁殖
 		s := make([]random.Scorer, len(b.group))
@@ -63,12 +86,15 @@ func (b *Biosphere) Run() {
 				b.bio.Variation(b.group[i].dna)
 			}
 		}
+		// bar.IncrBy(e)
+		bar.Increment()
 	}
+	p.Wait()
 }
 
 // best 显示最佳
 func (b *Biosphere) best() {
-	fmt.Printf(" 最高分: %03d, AGE: %02d ID: %s\n", b.group[0].Score(), len(b.group[0].scores)/b.TryTimes, b.group[0])
+	// fmt.Printf(" 最高分: %03d, AGE: %02d ID: %s\n", b.group[0].Score(), len(b.group[0].scores)/b.TryTimes, b.group[0])
 }
 
 // NewBiosphere 新建生物圈
