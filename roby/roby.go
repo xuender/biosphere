@@ -12,6 +12,9 @@ const NUM = 10
 // DNASize DNA 尺寸
 const DNASize = 243
 
+// MOVEMENT 6种动作
+const MOVEMENT = 6
+
 // Roby 机器人
 type Roby struct{}
 
@@ -20,7 +23,7 @@ func (r *Roby) Init() []int {
 	dna := make([]int, DNASize)
 	for i := 0; i < DNASize; i++ {
 		// DNA 全随机
-		dna[i] = rand.Intn(7)
+		dna[i] = rand.Intn(MOVEMENT)
 	}
 	return dna
 }
@@ -62,7 +65,6 @@ func (r *Roby) Score(dna []int) int {
 			} else {
 				score-- // 没有罐子扣1分
 			}
-		case 6: // 不动
 		}
 	}
 	return score
@@ -71,8 +73,18 @@ func (r *Roby) Score(dna []int) int {
 // Breed 繁殖
 func (r *Roby) Breed(parent ...[]int) []int {
 	dna := make([]int, DNASize)
+	// 前后段落拼接
+	// h := DNASize / len(parent)
+	// for f, p := range parent {
+	// 	for i := 0; i < h; i++ {
+	// 		l := f*h + i
+	// 		if l >= DNASize {
+	// 			break
+	// 		}
+	// 		dna[l] = p[l]
+	// 	}
+	// }
 	for i := range dna {
-		// 选择遗传
 		dna[i] = parent[i%len(parent)][i]
 	}
 	return dna
@@ -80,7 +92,7 @@ func (r *Roby) Breed(parent ...[]int) []int {
 
 // Variation 变异
 func (r *Roby) Variation(dna []int) []int {
-	dna[rand.Intn(DNASize)] = rand.Intn(7)
+	dna[rand.Intn(DNASize)] = rand.Intn(MOVEMENT)
 	return dna
 }
 
@@ -126,6 +138,7 @@ func (r *Roby) move(movement int, state [5]int, x, y int) (bool, int, int) {
 			return false, x, y
 		}
 		return true, x + 1, y
+	default:
+		return true, x, y
 	}
-	return true, x, y
 }

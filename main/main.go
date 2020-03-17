@@ -10,7 +10,6 @@ import (
 
 func main() {
 	b := biosphere.NewBiosphere(&roby.Roby{})
-	b.TryTimes = 10
 	b.Run()
 	fmt.Println("test")
 }

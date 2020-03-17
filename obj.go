@@ -13,7 +13,7 @@ type obj struct {
 }
 
 func (o *obj) String() string {
-	return fmt.Sprintf(" %d", o.dna[:24])
+	return fmt.Sprintf("%v", o.dna[:24])
 }
 
 func (o *obj) add(score int) {

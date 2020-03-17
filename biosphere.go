@@ -30,6 +30,10 @@ func (b *Biosphere) Run() {
 	for i := 0; i < b.GroupSize; i++ {
 		b.group[i] = &obj{dna: b.bio.Init()}
 	}
+	// data := "455351051456452243351633534451154250254154221451354510453256220034336004402541356453453250053056215343005531151152203453243006450145534054355644033052004366341442126140213356430424341446226153426123453230616665611301614145544550552231432632141"
+	// for i, d := range data {
+	// 	b.group[0].dna[i] = int(d - 48)
+	// }
 	// 迭代
 	for e := 0; e < b.EvalTimes; e++ {
 		// 遍历族群
@@ -72,9 +76,9 @@ func NewBiosphere(bio Bio) *Biosphere {
 	return &Biosphere{
 		bio:            bio,
 		GroupSize:      200,
-		EvalTimes:      1000,
-		TryTimes:       100,
+		EvalTimes:      3000,
+		TryTimes:       20,
 		Survival:       20,
-		VariationTimes: 10,
+		VariationTimes: 1, // 变异不能太严重
 	}
 }
