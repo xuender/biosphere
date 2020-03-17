@@ -43,8 +43,8 @@ func (b *Biosphere) Run() {
 			// 计数
 			decor.CountersNoUnit(": %d / %d", decor.WCSyncWidth),
 			decor.Any(func(s *decor.Statistics) string {
-				return fmt.Sprintf("最高分: %d", b.group[0].Score())
-			}, decor.WC{W: 6}),
+				return fmt.Sprintf(" 最高分: %03d", b.group[0].Score())
+			}),
 		),
 		// 进度条后缀
 		mpb.AppendDecorators(
