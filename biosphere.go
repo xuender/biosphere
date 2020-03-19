@@ -27,6 +27,8 @@ type Biosphere struct {
 
 // Run 运行
 func (b *Biosphere) Run() {
+	scores := make([]int, b.EvalTimes)
+	max := 0
 	// 初始化族群
 	b.group = make([]*obj, b.GroupSize)
 	for i := 0; i < b.GroupSize; i++ {
@@ -43,7 +45,7 @@ func (b *Biosphere) Run() {
 			// 计数
 			decor.CountersNoUnit(": %d / %d", decor.WCSyncWidth),
 			decor.Any(func(s *decor.Statistics) string {
-				return fmt.Sprintf(" 最高分: %03d", b.group[0].Score())
+				return fmt.Sprintf(" 最高分: %03d", max)
 			}),
 		),
 		// 进度条后缀
@@ -86,8 +88,11 @@ func (b *Biosphere) Run() {
 		}
 		// bar.IncrBy(e)
 		bar.Increment()
+		scores[e] = b.group[0].Score()
+		max = scores[e]
 	}
 	p.Wait()
+	// fmt.Println(scores)
 }
 
 // Best 显示最佳
@@ -96,7 +101,7 @@ func (b *Biosphere) Best(size int) {
 		size = len(b.group)
 	}
 	for i, o := range b.group[:size] {
-		fmt.Printf("%d: %s\n", i, o)
+		fmt.Printf("%d: %s\n", i+1, o)
 	}
 }
 

@@ -16,6 +16,9 @@ github.com/vbauerster/mpb v3.4.0+incompatible h1:mfiiYw87ARaeRW6x5gWwYRUawxaW1tL
 github.com/vbauerster/mpb v3.4.0+incompatible/go.mod h1:zAHG26FUhVKETRu+MWqYXcI70POlC6N8up9p1dID7SU=
 github.com/vbauerster/mpb/v5 v5.0.3 h1:Ldt/azOkbThTk2loi6FrBd/3fhxGFQ24MxFAS88PoNY=
 github.com/vbauerster/mpb/v5 v5.0.3/go.mod h1:h3YxU5CSr8rZP4Q3xZPVB3jJLhWPou63lHEdr9ytH4Y=
+github.com/xuender/biosphere v0.0.0-20200317122807-afdb6f5f1dc6/go.mod h1:aXkVZZmH/rypYARNFB5V9XbJ5PEGTepzX6l4DW2IKUc=
+github.com/xuender/biosphere/_examples/roby v0.0.0-20200319121626-9964f993fd54 h1:FvSyeJOYtEz+CtA+8pM8Bss4V4VPkoHY/X1xpvWgL7E=
+github.com/xuender/biosphere/_examples/roby v0.0.0-20200319121626-9964f993fd54/go.mod h1:mO7LmLMDgvaE4bfmJm9WHJQo7OPdPRSvF0yxQen6Ar0=
 github.com/xuender/oil v0.0.0-20200315041926-0cc93582dec8 h1:LtEPq8KAgQGmiTaVPKTnmpVtIiA/w6h58vOXbJD6B7U=
 github.com/xuender/oil v0.0.0-20200315041926-0cc93582dec8/go.mod h1:F5VB2EA8trmZtighU2/LvbMOVlfOYbjT4m0VTJ+fBQ8=
 github.com/xuender/oil v0.0.0-20200319121256-0a16f2920b3c h1:+9xV8MOhKEvjBw3KIZQeTTzEq1v6Hj05qNVf3hln8aw=
