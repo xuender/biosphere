@@ -69,8 +69,6 @@ func (b *Biosphere) Run() {
 		sort.Slice(b.group, func(i, j int) bool {
 			return b.group[i].Score() > b.group[j].Score()
 		})
-		// fmt.Printf("迭代: %04d", e+1)
-		b.best()
 		// 繁殖
 		s := make([]random.Scorer, len(b.group))
 		for i, o := range b.group {
@@ -92,9 +90,14 @@ func (b *Biosphere) Run() {
 	p.Wait()
 }
 
-// best 显示最佳
-func (b *Biosphere) best() {
-	// fmt.Printf(" 最高分: %03d, AGE: %02d ID: %s\n", b.group[0].Score(), len(b.group[0].scores)/b.TryTimes, b.group[0])
+// Best 显示最佳
+func (b *Biosphere) Best(size int) {
+	if size > len(b.group) {
+		size = len(b.group)
+	}
+	for i, o := range b.group[:size] {
+		fmt.Printf("%d: %s\n", i, o)
+	}
 }
 
 // NewBiosphere 新建生物圈

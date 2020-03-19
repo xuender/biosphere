@@ -8,4 +8,5 @@ import (
 func main() {
 	b := biosphere.NewBiosphere(&roby.Roby{})
 	b.Run()
+	b.Best(3)
 }
