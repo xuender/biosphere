@@ -118,7 +118,7 @@ func NewBiosphere(bio Bio) *Biosphere {
 	return &Biosphere{
 		bio:            bio,
 		GroupSize:      200,
-		EvalTimes:      3000,
+		EvalTimes:      2000,
 		TryTimes:       20,
 		Survival:       20,
 		VariationTimes: 1, // 变异不能太严重

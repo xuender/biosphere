@@ -9,6 +9,6 @@ require (
 	github.com/vbauerster/mpb v3.4.0+incompatible
 	github.com/vbauerster/mpb/v5 v5.0.3
 	github.com/xuender/biosphere/_examples/roby v0.0.0-20200319121626-9964f993fd54
-	github.com/xuender/oil v0.0.0-20200321014853-1775d1ef1c09
+	github.com/xuender/oil v0.0.0-20200321040139-2e3a2847e66e
 	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4 // indirect
 )
