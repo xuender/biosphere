@@ -2,10 +2,12 @@ package biosphere
 
 import (
 	"fmt"
+	"io/ioutil"
 	"sort"
 
 	"github.com/vbauerster/mpb/v5"
 	"github.com/vbauerster/mpb/v5/decor"
+	"github.com/xuender/oil/chart"
 	"github.com/xuender/oil/random"
 )
 
@@ -23,11 +25,17 @@ type Biosphere struct {
 	// 幸存数量
 	Survival int
 	group    []*obj // 族群
+	scores   []int  // 积分
+}
+
+// Chart 保存图表
+func (b *Biosphere) Chart(name string) {
+	ioutil.WriteFile(name+".svg", []byte(chart.Polyline(b.scores)), 0644)
 }
 
 // Run 运行
 func (b *Biosphere) Run() {
-	scores := make([]int, b.EvalTimes)
+	b.scores = make([]int, b.EvalTimes)
 	max := 0
 	// 初始化族群
 	b.group = make([]*obj, b.GroupSize)
@@ -68,6 +76,7 @@ func (b *Biosphere) Run() {
 				g.add(b.bio.Score(g.dna))
 			}
 		}
+		// 排序
 		sort.Slice(b.group, func(i, j int) bool {
 			return b.group[i].Score() > b.group[j].Score()
 		})
@@ -88,11 +97,10 @@ func (b *Biosphere) Run() {
 		}
 		// bar.IncrBy(e)
 		bar.Increment()
-		scores[e] = b.group[0].Score()
-		max = scores[e]
+		b.scores[e] = b.group[0].Score()
+		max = b.scores[e]
 	}
 	p.Wait()
-	// fmt.Println(scores)
 }
 
 // Best 显示最佳
