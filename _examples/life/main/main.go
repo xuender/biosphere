@@ -2,13 +2,14 @@ package main
 
 import (
 	"github.com/xuender/biosphere"
-	"github.com/xuender/biosphere/_examples/left"
+	"github.com/xuender/biosphere/_examples/life"
 )
 
 func main() {
-	b := biosphere.NewBiosphere(&left.Left{})
-	b.EvalTimes = 1000
-	b.TryTimes = 3
+	b := biosphere.NewBiosphere(&life.Life{})
+	b.EvalTimes = 3000
+	b.TryTimes = 50
+	b.VariationTimes = 5
 	b.Run()
 	b.Best(3)
 	b.Chart("chart")

@@ -42,7 +42,7 @@ func (r *Life) Score(dna []int) int {
 
 	// 200个动作
 	for i := 0; i < VITALITY; i++ {
-		state := stage.State(x, y)
+		state := stage.State(x, y, VITALITY-i)
 		// 获取行动
 		m := r.movement(dna, state)
 		// 行动
@@ -64,11 +64,14 @@ func (r *Life) Score(dna []int) int {
 		case 5: // 亲近
 			if stage[y][x] > 0 {
 				stage[y][x] = 0 // 训练过程除去对象
-				score += 10     // 有对象+10
 				if stage[y][x] > VITALITY-i {
-					i -= 10
+					score += 15 // 有对象+10
+					// 	i -= 10
+					// } else {
+					// 	i -= 5
 				} else {
-					i -= 5
+					score += 10 // 有对象+10
+
 				}
 			} else {
 				score-- // 没有对象扣1分
@@ -108,8 +111,19 @@ func (r *Life) Variation(dna []int) []int {
 func (r *Life) movement(dna []int, around [5]int) int {
 	id := 0
 	for i, a := range around {
-		if a > 0 {
-			id += integer.Exp(4, i) * a
+		// if a > 0 {
+		switch a {
+		case 0:
+			// 空 id += integer.Exp(4, i) * 0
+		case 1:
+			// 墙壁
+			id += integer.Exp(4, i) * 1
+		case 2:
+			// 高活力
+			id += integer.Exp(4, i) * 2
+		case 3:
+			// 低活力
+			id += integer.Exp(4, i) * 3
 		}
 	}
 	return dna[id]
@@ -120,28 +134,28 @@ func (r *Life) move(movement int, state [5]int, x, y int) (bool, int, int) {
 	switch movement {
 	case 0:
 		// 上
-		if state[0] < 0 {
+		if state[0] == 1 {
 			// 碰壁
 			return false, x, y
 		}
 		return true, x, y - 1
 	case 1:
 		// 下
-		if state[1] < 0 {
+		if state[1] == 1 {
 			// 碰壁
 			return false, x, y
 		}
 		return true, x, y + 1
 	case 2:
 		// 左
-		if state[2] < 0 {
+		if state[2] == 1 {
 			// 碰壁
 			return false, x, y
 		}
 		return true, x - 1, y
 	case 3:
 		// 右
-		if state[3] < 0 {
+		if state[3] == 1 {
 			// 碰壁
 			return false, x, y
 		}

@@ -10,33 +10,42 @@ import (
 type Stage [10][10]int
 
 // State 状态
-func (s Stage) State(x, y int) (ret [5]int) {
+func (s Stage) State(x, y, v int) (ret [5]int) {
 	// 上
 	if y == 0 {
-		ret[0] = -1
+		ret[0] = 1
 	} else {
 		ret[0] = s[y-1][x]
 	}
 	// 下
 	if y == 9 {
-		ret[1] = -1
+		ret[1] = 1
 	} else {
 		ret[1] = s[y+1][x]
 	}
 	// 左
 	if x == 0 {
-		ret[2] = -1
+		ret[2] = 1
 	} else {
 		ret[2] = s[y][x-1]
 	}
 	// 右
 	if x == 9 {
-		ret[3] = -1
+		ret[3] = 1
 	} else {
 		ret[3] = s[y][x+1]
 	}
 	// 中
 	ret[4] = s[y][x]
+	for i, r := range ret {
+		if r > 1 {
+			if v > r {
+				ret[i] = 2
+			} else {
+				ret[i] = 3
+			}
+		}
+	}
 	return
 }
 
@@ -49,7 +58,7 @@ func NewStage() Stage {
 		}
 	}
 	for _, n := range random.NewQueue(100, 50) {
-		stage[n/10][n%10] = rand.Intn(VITALITY+30) + 1
+		stage[n/10][n%10] = rand.Intn(VITALITY) + 2
 	}
 	return stage
 }

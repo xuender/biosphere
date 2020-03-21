@@ -8,6 +8,31 @@ import (
 	"github.com/xuender/biosphere"
 )
 
+func ExampleLife_move() {
+	r := Life{}
+	dna := make([]int, DNASize)
+	for i := range dna {
+		dna[i] = i
+	}
+	m := map[int]bool{}
+	for a := 0; a < 4; a++ {
+		for b := 0; b < 4; b++ {
+			for c := 0; c < 4; c++ {
+				for d := 0; d < 4; d++ {
+					for e := 0; e < 4; e++ {
+						m[r.movement(dna, [5]int{a, b, c, d, e})] = true
+						m[r.movement(dna, [5]int{a, b, c, d, e})] = true
+						// fmt.Println(r.movement(dna, [5]int{3, 3, 3, e, 3}, integer.MinInt))
+					}
+				}
+			}
+		}
+	}
+	fmt.Println("len", len(m))
+
+	// Output:
+	// len 1024
+}
 func TestLife_movement(t *testing.T) {
 	r := Life{}
 	dna := make([]int, DNASize)
@@ -20,6 +45,7 @@ func TestLife_movement(t *testing.T) {
 			for c := 0; c < 4; c++ {
 				for d := 0; d < 4; d++ {
 					for e := 0; e < 4; e++ {
+						m[r.movement(dna, [5]int{a, b, c, d, e})] = true
 						m[r.movement(dna, [5]int{a, b, c, d, e})] = true
 					}
 				}
