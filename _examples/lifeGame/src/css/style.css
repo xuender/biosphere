@@ -1,0 +1,19 @@
+body {
+  background: gainsboro;
+  text-align: center;
+}
+
+h1 {
+  font-size: 7rem;
+}
+
+h1 small {
+  font-size: 4rem;
+  color: gray;
+}
+
+.stage {
+  border: 5px solid gray;
+  padding: 10px;
+  background-color: white;
+}

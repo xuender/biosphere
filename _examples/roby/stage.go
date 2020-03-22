@@ -44,7 +44,7 @@ func NewStage() Stage {
 			stage[r][c] = 0
 		}
 	}
-	for _, n := range random.NewQueue(100, 50) {
+	for _, n := range random.NewQueue(100, 20) {
 		stage[n/10][n%10] = 1
 	}
 	return stage
