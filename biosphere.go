@@ -2,6 +2,7 @@ package biosphere
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"sort"
 
@@ -26,6 +27,12 @@ type Biosphere struct {
 	Survival int
 	group    []*obj // 族群
 	scores   []int  // 积分
+	times    []int  // 输出
+}
+
+// PrintTimes 输出时间
+func (b *Biosphere) PrintTimes(times ...int) {
+	b.times = times
 }
 
 // Chart 保存图表
@@ -99,8 +106,24 @@ func (b *Biosphere) Run() {
 		bar.Increment()
 		b.scores[e] = b.group[0].Score()
 		max = b.scores[e]
+		for _, t := range b.times {
+			if t == e {
+				filler := mpb.BarFillerFunc(func(w io.Writer, width int, st *decor.Statistics) {
+					fmt.Fprintf(w, fmt.Sprintf("%%.%ds", width), b.best(0))
+				})
+				p.Add(0, filler).SetTotal(0, true)
+			}
+		}
 	}
 	p.Wait()
+}
+
+// best 显示最佳
+func (b *Biosphere) best(i int) string {
+	if i >= len(b.group) {
+		i = len(b.group)
+	}
+	return b.group[i].String()
 }
 
 // Best 显示最佳
@@ -122,5 +145,6 @@ func NewBiosphere(bio Bio) *Biosphere {
 		TryTimes:       20,
 		Survival:       20,
 		VariationTimes: 1, // 变异不能太严重
+		times:          []int{},
 	}
 }
