@@ -16,13 +16,24 @@ export class Game {
     this.stage = new Stage(width, height, 1000 / width)
     this.stage.init(id)
     // 初始化生命DNA
-    forEach('451352255251245523350355350151353152150454155151315504051033004251435252053201234053355050252125240452140020055044213415214043053400144424102422142535121222014451152155524444421250452311354143345025311032345251512502514220244241124142103551011', n => {
-      this.dna.push(parseInt(n))
+    forEach(`
+25335515425543225005333303315223415315143515515305
+05450500532542524302500554324110523541010530451020
+55030204052051155002404404150131323055433224053032
+05200205013135335515215535315035335113315035315435
+2330421110430115224131413254013111425143425
+`, n => {
+      if (n.trim()) {
+        this.dna.push(parseInt(n))
+      }
     })
   }
   init() {
     console.debug('初始化游戏');
-    ['red', 'green', 'chocolate', 'Cyan', 'Indigo', 'Gray', 'Silver', 'Tan', 'Violet', 'DarkBlue', 'Black'].forEach(color => {
+    [
+      'red', 'green', 'chocolate',
+      'Cyan', 'Indigo', 'Gray', 'Silver', 'Tan', 'Violet', 'DarkBlue', 'Black'
+    ].forEach(color => {
       // const id = uniqueId()
       const id = color
       this.lifes.push({
@@ -139,7 +150,7 @@ export class Game {
     for (let i = 0; i < state.length; i++) {
       const a = state[i]
       if (a > 0) {
-        id += 3 ** 4 - i * a
+        id += (3 ** (4 - i)) * a
       }
     }
     return this.dna[id]

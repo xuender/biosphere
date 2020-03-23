@@ -2,6 +2,9 @@ package biosphere
 
 import (
 	"fmt"
+	"strings"
+
+	"github.com/xuender/oil/str"
 
 	"github.com/xuender/oil/integer"
 )
@@ -13,7 +16,12 @@ type obj struct {
 }
 
 func (o *obj) String() string {
-	return fmt.Sprintf("积分: %d, 年龄:%d, %s", o.Score(), len(o.scores), integer.String(o.dna...))
+	return fmt.Sprintf(
+		"积分: %d, 年龄:%d\n%s\n",
+		o.Score(),
+		len(o.scores),
+		strings.Join(str.Chunk(integer.String(o.dna...), 50), "\n"),
+	)
 }
 
 func (o *obj) add(score int) {

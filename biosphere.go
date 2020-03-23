@@ -2,7 +2,6 @@ package biosphere
 
 import (
 	"fmt"
-	"io"
 	"io/ioutil"
 	"sort"
 
@@ -108,22 +107,15 @@ func (b *Biosphere) Run() {
 		max = b.scores[e]
 		for _, t := range b.times {
 			if t == e {
-				filler := mpb.BarFillerFunc(func(w io.Writer, width int, st *decor.Statistics) {
-					fmt.Fprintf(w, fmt.Sprintf("%%.%ds", width), b.best(0))
-				})
-				p.Add(0, filler).SetTotal(0, true)
+				fmt.Println(b.group[0].String())
+				// filler := mpb.BarFillerFunc(func(w io.Writer, width int, st *decor.Statistics) {
+				// 	fmt.Fprintf(w, fmt.Sprintf("%%.%ds", width), b.best(0))
+				// })
+				// p.Add(0, filler).SetTotal(0, true)
 			}
 		}
 	}
 	p.Wait()
-}
-
-// best 显示最佳
-func (b *Biosphere) best(i int) string {
-	if i >= len(b.group) {
-		i = len(b.group)
-	}
-	return b.group[i].String()
 }
 
 // Best 显示最佳

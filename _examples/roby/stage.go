@@ -53,7 +53,7 @@ func NewStage(size int) Stage {
 			stage.data[r][c] = 0
 		}
 	}
-	for _, n := range random.NewQueue(size*size, size*size/2) {
+	for _, n := range random.NewQueue(size*size, size*size/8) {
 		stage.data[n/size][n%size] = 1
 	}
 	return stage

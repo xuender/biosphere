@@ -8,7 +8,6 @@ require (
 	github.com/stretchr/testify v1.5.1
 	github.com/vbauerster/mpb v3.4.0+incompatible
 	github.com/vbauerster/mpb/v5 v5.0.3
-	github.com/xuender/biosphere/_examples/roby v0.0.0-20200319121626-9964f993fd54
-	github.com/xuender/oil v0.0.0-20200321040139-2e3a2847e66e
-	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4 // indirect
+	github.com/xuender/biosphere/_examples/roby v0.0.0-20200323103450-263bcabbbaa0
+	github.com/xuender/oil v0.0.0-20200323111433-2f81fc083688
 )
