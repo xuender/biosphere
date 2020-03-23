@@ -32,10 +32,20 @@ func (r *Roby) Init() []int {
 func (r *Roby) Score(dna []int, times int) int {
 	// 新建舞台
 	// TODO 舞台尺寸可以不断变化，从小到大，学习小舞台，到大舞台
-	stage := NewStage()
+	size := 2
+	if times > 200 {
+		size = 4
+	}
+	if times > 400 {
+		size = 8
+	}
+	if times > 800 {
+		size = 10
+	}
+	stage := NewStage(size)
 	// 初始位置
-	x := rand.Intn(10)
-	y := rand.Intn(10)
+	x := rand.Intn(size)
+	y := rand.Intn(size)
 	score := 0
 
 	// 200个动作
@@ -60,8 +70,8 @@ func (r *Roby) Score(dna []int, times int) int {
 				score -= 5 // 撞墙扣5分
 			}
 		case 5: // 捡罐头
-			if stage[y][x] == 1 {
-				stage[y][x] = 0
+			if stage.data[y][x] == 1 {
+				stage.data[y][x] = 0
 				score += 10 // 捡到罐子10分
 			} else {
 				score-- // 没有罐子扣1分

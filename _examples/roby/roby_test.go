@@ -59,5 +59,5 @@ func TestRoby_Score(t *testing.T) {
 	for i, d := range data {
 		dna[i] = int(d - 48)
 	}
-	assert.Greater(t, r.Score(dna), 100, "大于100分")
+	assert.Greater(t, r.Score(dna, 100), 100, "大于100分")
 }

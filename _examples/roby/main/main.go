@@ -8,7 +8,7 @@ import (
 func main() {
 	b := biosphere.NewBiosphere(&roby.Roby{})
 	b.EvalTimes = 3000
-	b.TryTimes = 10
+	b.TryTimes = 100
 	b.Run()
 	b.Best(3)
 	b.Chart("chart")

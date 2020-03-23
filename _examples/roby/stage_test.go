@@ -8,10 +8,10 @@ import (
 )
 
 func TestNewStage(t *testing.T) {
-	s := NewStage()
-	assert.Equal(t, 10, len(s), "行列")
+	s := NewStage(10)
+	assert.Equal(t, 10, len(s.data), "行列")
 	count := 0
-	for _, row := range s {
+	for _, row := range s.data {
 		for _, col := range row {
 			count += col
 		}
@@ -20,8 +20,8 @@ func TestNewStage(t *testing.T) {
 }
 
 func ExampleNewStage() {
-	s := NewStage()
-	fmt.Println(len(s))
+	s := NewStage(10)
+	fmt.Println(len(s.data))
 
 	// Output:
 	// 10
