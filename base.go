@@ -3,7 +3,7 @@ package biosphere
 // base 基础
 type base struct {
 	init      func() []int
-	score     func(dna []int) int
+	score     func(dna []int, times int) int
 	breed     func(parent ...[]int) []int
 	variation func(dna []int) []int
 }
@@ -14,8 +14,8 @@ func (b *base) Init() []int {
 }
 
 // Score 评分
-func (b *base) Score(dna []int) int {
-	return b.score(dna)
+func (b *base) Score(dna []int, times int) int {
+	return b.score(dna, times)
 }
 
 // Breed 繁殖

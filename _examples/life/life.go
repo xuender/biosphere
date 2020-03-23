@@ -32,7 +32,7 @@ func (r *Life) Init() []int {
 }
 
 // Score 积分
-func (r *Life) Score(dna []int) int {
+func (r *Life) Score(dna []int, times int) int {
 	// 新建舞台
 	stage := NewStage()
 	// 初始位置

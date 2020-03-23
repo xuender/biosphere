@@ -29,7 +29,7 @@ func (r *Roby) Init() []int {
 }
 
 // Score 积分
-func (r *Roby) Score(dna []int) int {
+func (r *Roby) Score(dna []int, times int) int {
 	// 新建舞台
 	// TODO 舞台尺寸可以不断变化，从小到大，学习小舞台，到大舞台
 	stage := NewStage()

@@ -73,7 +73,7 @@ func (b *Biosphere) Run() {
 		for _, g := range b.group {
 			// 个体尝试
 			for t := 0; t < b.TryTimes; t++ {
-				g.add(b.bio.Score(g.dna))
+				g.add(b.bio.Score(g.dna, e))
 			}
 		}
 		// 排序

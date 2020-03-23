@@ -5,7 +5,7 @@ type Bio interface {
 	// Init 初始化
 	Init() []int
 	// 评分
-	Score(dna []int) int
+	Score(dna []int, times int) int
 	// 繁殖
 	Breed(parent ...[]int) []int
 	// 变异
