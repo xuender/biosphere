@@ -1,8 +1,8 @@
 import './css/style.css'
 import { Game } from './game'
-const game = new Game('game', 10, 10)
+const game = new Game('game', 40, 40)
 game.init()
-game.play()
+game.play(50)
 
 // stage.show(3, 6)
 // for (let x = 0; x < 100; x++) {

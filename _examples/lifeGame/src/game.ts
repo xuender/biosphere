@@ -1,7 +1,8 @@
 import { Stage } from "./stage";
-import { times, random, forEach, uniqueId } from "lodash";
+import { times, includes, random, forEach, chain } from "lodash";
 import { sleep } from "./utils/sleep";
 import { Life } from "./life";
+import { direction } from "./utils/point";
 
 /**
  * 游戏
@@ -10,7 +11,6 @@ export class Game {
   stage: Stage
   lifes: Life[] = []
   dna: number[] = []
-  private color = new Map()
   constructor(id: string, public width = 100, public height = 100) {
     // 初始化舞台
     this.stage = new Stage(width, height, 1000 / width)
@@ -30,29 +30,24 @@ export class Game {
   }
   init() {
     console.debug('初始化游戏');
-    [
-      'red', 'green', 'chocolate',
-      'Cyan', 'Indigo', 'Gray', 'Silver', 'Tan', 'Violet', 'DarkBlue', 'Black'
-    ].forEach(color => {
-      // const id = uniqueId()
-      const id = color
-      this.lifes.push({
-        id,
-        x: random(0, this.width),
-        y: random(0, this.height),
-      })
-      this.color.set(id, color)
+    times(2, () => {
+      const l = new Life(random(0, this.width - 1), random(0, this.height - 1))
+      l.r = random(0, 255)
+      l.g = random(0, 255)
+      l.b = random(0, 255)
+      this.lifes.push(l)
+
     })
     this.show()
   }
   show() {
     this.stage.clean()
     for (const l of this.lifes) {
-      this.stage.show(l.x, l.y, this.color.get(l.id))
+      this.stage.show(l.x, l.y, `rgb(${l.r},${l.g},${l.b})`)
     }
   }
-  async play() {
-    for (let i = 0; i < 200; i++) {
+  async play(s = 200) {
+    for (let i = 0; i < s; i++) {
       await sleep(200)
       for (const l of this.lifes) {
         this.run(l)
@@ -68,6 +63,14 @@ export class Game {
       case 5: // 捡罐头
         if (this.hasLife(l.x, l.y, l.id)) {
           console.log(l.id, '抓到了')
+          l.x = random(0, this.width - 1)
+          l.y = random(0, this.height - 1)
+          const o = this.other(l)
+          const c = l.breed(o)
+          c.x = random(0, this.width - 1)
+          c.y = random(0, this.height - 1)
+          this.lifes.push(c)
+          // l.break()
           break
         } else {
           console.log(l.id, '错误的操作,没有其他人')
@@ -188,8 +191,29 @@ export class Game {
     }
     // 中
     ret[4] = this.hasLife(x, y, id)
+    // 上下左右有生命
+    if (includes(ret, 1)) {
+      return ret
+    }
+    const latest = this.latest(x, y, id)
+    for (let i = 0; i < ret.length; i++) {
+      if (ret[i] == 1) {
+        ret[i] = 0
+      }
+    }
+    // 确定大方向
+    ret[direction([x, y], [latest.x, latest.y])] = 1
     return ret
   }
+  private other(m: Life) {
+    for (const l of this.lifes) {
+      if (l.x == m.x && l.y == m.y && l.id != m.id) {
+        return l
+      }
+    }
+    return m
+  }
+  // 判断位置是否有其他生命
   hasLife(x: number, y: number, id: string) {
     for (const l of this.lifes) {
       if (l.x == x && l.y == y && l.id != id) {
@@ -197,5 +221,13 @@ export class Game {
       }
     }
     return 0
+  }
+  // 寻找最近的生命
+  private latest(x: number, y: number, id: string) {
+    return chain(this.lifes)
+      .filter(l => l.id != id)
+      .sortBy(l => (x - l.x) ** 2 + (y - l.y) ** 2)
+      .head()
+      .value()
   }
 }
